@@ -1,18 +1,16 @@
 import React from 'react'
-import useStats from '../helper/useStats'
+import useStats from '../helper/useStats';
 
-interface props {
-    url: string
-}
-
-export const Stats: React.FC<props> = ({}) => {
-    const stats = useStats<props>({url : 'https://covid19.mathdro.id/api'})
-
+export default function Stats() {
+    const liveStatesData = useStats("https://api.covidnow.com/v1/usa/states")
+    const liveCountiesData = useStats('https://api.covidnow.com/v1/usa/counties')
+    if (liveStatesData.stats) {
+        console.log(liveStatesData)
+        console.log(liveCountiesData)
+    }
     return (
         <div>
-            <div>
-
-            </div>
+            
         </div>
     )
 }

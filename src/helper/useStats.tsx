@@ -1,24 +1,27 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
-interface props {
-    url: string
-}
-
-export const Stats: React.FC<props> = (props) =>{
-    const [stats, setstats] = useState()
+const useStats = (api: string) => {
+    const [stats, setStats] = useState([])
+    const [error, setError] = useState(null)
 
     useEffect(() => {
-        async function getData() {
-            console.log('getting virus data')
-            await axios.get(props.url)
-            .then(res => setstats(res.data))
-            .then(res => console.log(res))
+        const getData = async () => {
+            try {
+                console.log('getting virus data')
+                await axios.get(api)
+                    .then(res => setStats(res.data))
+                    .then(res => console.log(res))
+            }
+            catch (error) {
+                setError(error)
+            }
         }
-
         getData()
-    },)
+    }, [])
 
-    return stats
+    return { stats, error }
 }
+
+export default useStats
 
