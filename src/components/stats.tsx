@@ -5,24 +5,9 @@ import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
-import { stateFills, stateLines } from '../layers/layers';
+import { stateFills, stateLines, buttonStyles } from '../layers/layers';
 
-const useStyles = makeStyles({
-    sun: {
-        marginLeft: 30,
-        marginTop: 60,
-        padding: 25,
-        borderRadius: 100,
-    },
-    moon: {
-        background: '#2e2e2e',
-        marginLeft: 30,
-        marginTop: 60,
-        padding: 25,
-        borderRadius: 100,
-    }
-})
-
+const useStyles = makeStyles(buttonStyles)
 
 export default function Stats() {
     const liveStatesData = useStats("https://api.covidnow.com/v1/usa/states")
@@ -47,13 +32,7 @@ export default function Stats() {
                 {...viewport}
                 onViewportChange={setViewport}
                 mapStyle={dark ? 'mapbox://styles/mapbox/dark-v10' : 'mapbox://styles/mapbox/light-v10'}
-                onHover={(e) => {
-                    if(e.features[0].properties.type == 'state'){
-                        setHoverStateId(e.features[0].properties.name)
-                        console.log(hoverStateId)
-                    }
-                }}
-                
+                onHover={(e) => { if (e.features[0].properties.STATE_NAME) {setHoverStateId(e.features[0].properties)} }}  
             >
             <Source 
                 id='states' 
@@ -62,7 +41,7 @@ export default function Stats() {
     
                 >
                     <Layer id='stateLines' {...stateLines} />
-                    {/* <Layer id='stateFills' {...stateFills} /> */}
+                    <Layer id='stateFills' {...stateFills} />
             </Source>
                 <Button 
                     classes={dark ? { root: classes.sun } : { root: classes.moon } }
