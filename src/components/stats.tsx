@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import ReactMapGl from 'react-map-gl';
+import ReactMapGl, { Source, Layer } from 'react-map-gl';
 import useStats from '../helper/useStats';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
+import { stateFills, stateLines } from '../layers/layers';
 
 const useStyles = makeStyles({
     sun: {
@@ -22,11 +23,13 @@ const useStyles = makeStyles({
     }
 })
 
+
 export default function Stats() {
     const liveStatesData = useStats("https://api.covidnow.com/v1/usa/states")
     const liveCountiesData = useStats('https://api.covidnow.com/v1/usa/counties')
 
     const [dark, setDark] = useState(false)
+    const [hoverStateId, setHoverStateId] = useState(null)
 
     const classes = useStyles()
 
@@ -44,7 +47,23 @@ export default function Stats() {
                 {...viewport}
                 onViewportChange={setViewport}
                 mapStyle={dark ? 'mapbox://styles/mapbox/dark-v10' : 'mapbox://styles/mapbox/light-v10'}
+                onHover={(e) => {
+                    if(e.features[0].properties.type == 'state'){
+                        setHoverStateId(e.features[0].properties.name)
+                        console.log(hoverStateId)
+                    }
+                }}
+                
             >
+            <Source 
+                id='states' 
+                type={'geojson'} 
+                data={'https://docs.mapbox.com/mapbox-gl-js/assets/us_states.geojson'}
+    
+                >
+                    <Layer id='stateLines' {...stateLines} />
+                    {/* <Layer id='stateFills' {...stateFills} /> */}
+            </Source>
                 <Button 
                     classes={dark ? { root: classes.sun } : { root: classes.moon } }
                     size="small"
