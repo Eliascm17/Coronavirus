@@ -2,11 +2,7 @@ export const stateFills = {
     id: 'state-fills',
     type: 'fill',
     source: 'states',
-    layout: {},
-    paint: {
-        'fill-color': '#627BC1',
-        'fill-opacity': 0.5
-    }
+    layout: {}
 }
 
 export const stateLines = {
