@@ -29,78 +29,75 @@ export default function Stats() {
     })
 
     return (
-            // <ReactMapGl
-            //     mapboxApiAccessToken={process.env.REACT_APP_API_KEY}
-            //     {...viewport}
-            //     onViewportChange={setViewport}
-            //     mapStyle={dark ? 'mapbox://styles/mapbox/dark-v10' : 'mapbox://styles/mapbox/light-v10'}
-            //     onHover={(e) => { if (e.features[0].properties.STATE_NAME) {
+            <ReactMapGl
+                mapboxApiAccessToken={process.env.REACT_APP_API_KEY}
+                {...viewport}
+                onViewportChange={setViewport}
+                mapStyle={dark ? 'mapbox://styles/mapbox/dark-v10' : 'mapbox://styles/mapbox/light-v10'}
+                onHover={(e) => { if (e.features[0].properties.STATE_NAME) {
                     
-            //         setHoverStateId(e.features[0].properties)
-            //         // if(hoverStateId){
+                    setHoverStateId(e.features[0].properties)
+                    // if(hoverStateId){
                         
-            //         // }
-            //     } }}  
-            // >
-            // <Source 
-            //     id='states' 
-            //     type={'geojson'} 
-            //     data={'https://docs.mapbox.com/mapbox-gl-js/assets/us_states.geojson'}
+                    // }
+                } }}  
+            >
+            {/* <Source 
+                id='states' 
+                type={'geojson'} 
+                data={'https://docs.mapbox.com/mapbox-gl-js/assets/us_states.geojson'}
     
-            //     >
-            //         <Layer id='stateLines' {...stateLines} />
-            //         <Layer 
-            //             id='stateFills' 
-            //             type='fill'
-            //             source='states'
-            //             paint={{
-            //                 'fill-color': '#627BC1',
-            //                 'fill-opacity': [
-            //                     'case',
-            //                     ['boolean', ['feature-state', 'hover'], false],
-            //                     1,
-            //                     0.5
-            //                 ]
-            //             }}
-            //         />
-            //         {hoverStateId && (
-            //             <FeatureState
-            //                 id='stateFills'
-            //                 source='states'
-            //                 state={{ hover: true }}
-            //             />
-            //         )}
+                >
+                    <Layer id='stateLines' {...stateLines} />
+                    <Layer 
+                        id='stateFills' 
+                        type='fill'
+                        source='states'
+                        paint={{
+                            'fill-color': '#627BC1',
+                            'fill-opacity': [
+                                'case',
+                                ['boolean', ['feature-state', 'hover'], false],
+                                1,
+                                0.5
+                            ]
+                        }}
+                    />
+                    {hoverStateId && (
+                        <FeatureState
+                            id='stateFills'
+                            source='states'
+                            state={{ hover: true }}
+                        />
+                    )}
 
-            // </Source>
-            //     <Button 
-            //         classes={dark ? { root: classes.sun } : { root: classes.moon } }
-            //         size="small"
-            //         variant="contained"
-            //         startIcon={dark ? 
-            //             <FontAwesomeIcon 
-            //                 icon={faSun} 
-            //                 style={{ 
-            //                     fontSize: 35,
-            //                     paddingLeft: 3,
-            //                     paddingTop: 3,
-            //                     paddingBottom: 3
+            </Source> */}
+                <Button 
+                    classes={dark ? { root: classes.sun } : { root: classes.moon } }
+                    size="small"
+                    variant="contained"
+                    startIcon={dark ? 
+                        <FontAwesomeIcon 
+                            icon={faSun} 
+                            style={{ 
+                                fontSize: 35,
+                                paddingLeft: 3,
+                                paddingTop: 3,
+                                paddingBottom: 3
                                 
-            //                 }} /> : 
-            //             <FontAwesomeIcon 
-            //                 icon={faMoon} 
-            //                 style={{ 
-            //                     fontSize: 35, 
-            //                     paddingLeft: 3,
-            //                     paddingTop: 3,
-            //                     paddingBottom: 3,
-            //                     color: '#e3e3e3'
-            //                 }}/>}
-            //         onClick={() => {setDark(!dark)}}
-            //     ></Button>
-            // </ReactMapGl>   
-    
-    <div></div>
-    
-    
+                            }} /> : 
+                        <FontAwesomeIcon 
+                            icon={faMoon} 
+                            style={{ 
+                                fontSize: 35, 
+                                paddingLeft: 3,
+                                paddingTop: 3,
+                                paddingBottom: 3,
+                                color: '#e3e3e3'
+                            }}/>}
+                    onClick={() => {setDark(!dark)}}
+                ></Button>
+            </ReactMapGl>   
+     
             )
 }

@@ -25,16 +25,83 @@ const Map = () => {
         const initializeMap = ({ setMap, mapContainer }: IProps) => {
 
             const map = new mapboxgl.Map({
-                container: mapContainer.current,
-                style: "mapbox://styles/mapbox/streets-v11", // stylesheet location
-                center: [0, 0],
-                zoom: 5
+                container: 'map',
+                style: "mapbox://styles/mapbox/dark-v10", // stylesheet location
+                center: [ -96.7129, 38.0902],
+                zoom: 4.3
             });
+
+            var mapDiv: any = document.getElementById('map');
+            mapDiv.style.height = '100%';
+
+            var hoveredStateId: any = null;
 
             map.on("load", () => {
                 setMap(map);
                 map.resize();
+
+                map.addSource('states', {
+                    'type': 'geojson',
+                    'data':
+                        'https://docs.mapbox.com/mapbox-gl-js/assets/us_states.geojson'
+                });
+
+                map.addLayer({
+                    'id': 'state-fills',
+                    'type': 'fill',
+                    'source': 'states',
+                    'layout': {},
+                    'paint': {
+                        'fill-color': '#627BC1',
+                        'fill-opacity': [
+                            'case',
+                            ['boolean', ['feature-state', 'hover'], false],
+                            1,
+                            0.5
+                        ]
+                    }
+                });
+
+                map.addLayer({
+                    'id': 'state-borders',
+                    'type': 'line',
+                    'source': 'states',
+                    'layout': {},
+                    'paint': {
+                        'line-color': '#627BC1',
+                        'line-width': 2
+                    }
+                });
+
+                map.on('mousemove', 'state-fills', function (e: any) {
+                    if (e.features.length > 0) {
+                        if (hoveredStateId) {
+                            map.setFeatureState(
+                                { source: 'states', id: hoveredStateId },
+                                { hover: false }
+                            );
+                        }
+                        hoveredStateId = e.features[0].id;
+                        map.setFeatureState(
+                            { source: 'states', id: hoveredStateId },
+                            { hover: true }
+                        );
+                    }
+                });
+
+
+                map.on('mouseleave', 'state-fills', function () {
+                    if (hoveredStateId) {
+                        map.setFeatureState(
+                            { source: 'states', id: hoveredStateId },
+                            { hover: false }
+                        );
+                    }
+                    hoveredStateId = null;
+                });
+
             });
+
         };
 
         if (!map) initializeMap({ setMap, mapContainer });
@@ -42,7 +109,7 @@ const Map = () => {
     }, [map]);
 
     return(
-        <div ref={(el: any) => (mapContainer.current = el)} style={styles}/>
+        <div id='map' ref={(el: any) => (mapContainer.current = el)} style={styles}/>
     ) 
 };
 
