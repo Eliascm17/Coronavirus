@@ -8,10 +8,11 @@ import { ThemeProvider } from 'emotion-theming'
 import { theme } from './theme/theme';
 
 export default function App() {
+
   return (
     <GlobalStateProvider>
       <ThemeProvider theme={theme}>
-        <Map />
+        <Map/>
       </ThemeProvider>
     </GlobalStateProvider>
   );

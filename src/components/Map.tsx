@@ -5,6 +5,7 @@ import { Global, css } from '@emotion/core'
 import { useTheme } from 'emotion-theming'
 import Context from '../store/context'
 import { theme } from '../theme/theme';
+import Toggle from './Toggle'
 
 interface IProps {
     setMap: any;
@@ -17,7 +18,7 @@ const styles: React.CSSProperties  = {
     position: "absolute"
 };
 
-const Map = () => {
+const Map = ({children}: any) => {
     
     const { state }: any = useContext(Context)
     const theme: any = useTheme()
@@ -115,7 +116,10 @@ const Map = () => {
     }, [map]);
 
     return(
-        <div id='map' ref={(el: any) => (mapContainer.current = el)} style={styles}/>
+        <>
+            <div id='map' ref={(el: any) => (mapContainer.current = el)} style={styles}/>
+            <Toggle />
+        </>
     ) 
 };
 
