@@ -13,7 +13,7 @@ const reducer = (state: any, action: any) => {
 const useGlobalState = () => {
 
     const [state, dispatch] = useReducer(reducer, {
-        isDark: true,
+        isDark: false,
     })
 
     return {state, dispatch}

@@ -1,6 +1,10 @@
-import React, { useEffect, useRef, useState, ReactNode, Fragment } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
+import { Global, css } from '@emotion/core'
+import { useTheme } from 'emotion-theming'
+import Context from '../store/context'
+import { theme } from '../theme/theme';
 
 interface IProps {
     setMap: any;
@@ -14,7 +18,9 @@ const styles: React.CSSProperties  = {
 };
 
 const Map = () => {
-
+    
+    const { state }: any = useContext(Context)
+    const theme: any = useTheme()
     const [map, setMap] = useState(null);
     const mapContainer = useRef(null);
 
@@ -26,7 +32,7 @@ const Map = () => {
 
             const map = new mapboxgl.Map({
                 container: 'map',
-                style: "mapbox://styles/mapbox/dark-v10", // stylesheet location
+                style: state.isDark ? theme.dark.mapStyle : theme.light.mapStyle,
                 center: [ -96.7129, 38.0902],
                 zoom: 4.3
             });
