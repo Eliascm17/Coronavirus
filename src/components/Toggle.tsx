@@ -1,12 +1,15 @@
 import React, { useState, useContext } from 'react'
 import { theme } from '../theme/theme'
 import { useTheme } from 'emotion-theming';
-import Context from '../store/context';
+import { GlobalContext } from '../store/context';
 
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
+import useGlobalState from '../store/useGlobalState';
+import { IGlobalStateActions, GlobalStateActionTypes } from '../store/useGlobalState';
+import { Global } from '@emotion/core';
 
 const useStyles = makeStyles({
     sun: {
@@ -33,7 +36,7 @@ const useStyles = makeStyles({
 
 const Toggle = () => {
     
-    const { state, dispatch }: any = useContext(Context)
+    const { state, dispatch }: any = useContext(GlobalContext)
     const classes = useStyles()
 
     return (
@@ -55,7 +58,7 @@ const Toggle = () => {
                         color: '#e3e3e3'
                     }}/>
                 }
-            onClick={() => { dispatch({ type: "TOGGLE_DARK_MODE" }); console.log('toggle'); window.location.reload(true);}}  
+            onClick={() => { dispatch({ type: GlobalStateActionTypes.TOGGLE_DARK_MODE }); console.log('toggle'); window.location.reload(true);}}  
         ></Button>
     )
 }

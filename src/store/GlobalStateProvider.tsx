@@ -1,10 +1,10 @@
 import React from 'react'
 import useGlobalState from "./useGlobalState";
-import Context from './context'
+import { GlobalContext } from './context';
 
 const GlobalStateProvider = ({children}: any) => {
     return(
-        <Context.Provider value={useGlobalState()}>{children}</Context.Provider>
+        <GlobalContext.Provider value={useGlobalState()}>{children}</GlobalContext.Provider>
     )
 }
 

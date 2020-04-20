@@ -3,14 +3,9 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { Global, css } from '@emotion/core'
 import { useTheme } from 'emotion-theming'
-import Context from '../store/context'
+import { GlobalContext } from '../store/context'
 import { theme } from '../theme/theme';
 import Toggle from './Toggle'
-
-interface IProps {
-    setMap: any;
-    mapContainer: any;
-}
 
 const styles: React.CSSProperties  = {
     width: "100vw",
@@ -18,18 +13,21 @@ const styles: React.CSSProperties  = {
     position: "absolute"
 };
 
-const Map = ({children}: any) => {
+const Map = () => {
     
-    const { state }: any = useContext(Context)
+    const { state }: any = useContext(GlobalContext)
     const theme: any = useTheme()
-    const [map, setMap] = useState(null);
-    const mapContainer = useRef(null);
+    const [map, setMap] = useState<mapboxgl.Map>();
+    const mapContainer = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
 
         mapboxgl.accessToken = 'pk.eyJ1IjoiZWxpYXNjbTE3IiwiYSI6ImNrOHJyNjNndzBobTQzZnBtOG85cW5iMzIifQ.C7a0Lkk8aenM5SDxQYw-Hg'
+        interface IProps {
+            setMap: React.Dispatch<React.SetStateAction<mapboxgl.Map | undefined>>;
+        }
 
-        const initializeMap = ({ setMap, mapContainer }: IProps) => {
+        const initializeMap = ({ setMap }: IProps) => {
 
             const map = new mapboxgl.Map({
                 container: 'map',
@@ -111,13 +109,13 @@ const Map = ({children}: any) => {
 
         };
 
-        if (!map) initializeMap({ setMap, mapContainer });
+        if (!map) initializeMap({ setMap });
 
     }, [map]);
 
     return(
         <>
-            <div id='map' ref={(el: any) => (mapContainer.current = el)} style={styles}/>
+            <div id='map' ref={mapContainer} style={styles}/>
             <Toggle />
         </>
     ) 
