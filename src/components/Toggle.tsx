@@ -12,49 +12,49 @@ const useStyles = makeStyles({
     sun: {
         marginLeft: 30,
         marginTop: 60,
-        padding: 25,
+        padding: 20,
+        paddingLeft: 20,
+        paddingRight: 13,
         borderRadius: 100,
     },
     moon: {
         background: '#2e2e2e',
         marginLeft: 30,
         marginTop: 60,
-        padding: 25,
+        padding: 20,
+        paddingLeft: 20,
+        paddingRight: 13,
         borderRadius: 100,
+        '&:hover': {
+            background: '#2e2e2e'
+        }
     }
 })
 
 const Toggle = () => {
     
     const { state, dispatch }: any = useContext(Context)
-    const theme = useTheme()
-
     const classes = useStyles()
 
     return (
+        
         <Button 
             classes={state.isDark ? { root: classes.sun } : { root: classes.moon } }
             size="small"
             variant="contained"
             startIcon={state.isDark ? 
                 <FontAwesomeIcon 
-                    icon={faSun} 
+                    icon={faSun}
                     style={{ 
-                        fontSize: 35,
-                        paddingLeft: 3,
-                        paddingTop: 3,
-                        paddingBottom: 3
-
+                        fontSize: 40
                     }} /> : 
                 <FontAwesomeIcon 
                     icon={faMoon} 
                     style={{ 
-                        fontSize: 35, 
-                        paddingLeft: 3,
-                        paddingTop: 3,
-                        paddingBottom: 3,
+                        fontSize: 40,
                         color: '#e3e3e3'
-                    }}/>}
+                    }}/>
+                }
             onClick={() => { dispatch({ type: "TOGGLE_DARK_MODE" }); console.log('toggle'); window.location.reload(true);}}  
         ></Button>
     )

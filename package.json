@@ -15,6 +15,7 @@
     "@types/node": "^12.12.30",
     "@types/react-dom": "^16.9.5",
     "@types/react-map-gl": "^5.2.2",
+    "@types/react-native-vector-icons": "^6.4.5",
     "@types/styled-components": "^5.1.0",
     "@urbica/react-map-gl": "^1.13.0",
     "axios": "^0.19.2",
@@ -24,6 +25,7 @@
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-map-gl": "^5.2.3",
+    "react-native-vector-icons": "^6.6.0",
     "react-scripts": "3.4.0",
     "styled-components": "^5.1.0",
     "typescript": "^3.8.3"
