@@ -6,6 +6,7 @@ import { useTheme } from 'emotion-theming'
 import { GlobalContext } from '../store/context'
 import { theme } from '../theme/theme';
 import Toggle from './Toggle'
+import { stringify } from "querystring";
 
 const styles: React.CSSProperties  = {
     width: "100vw",
@@ -21,8 +22,9 @@ const Map = () => {
     const mapContainer = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-
-        mapboxgl.accessToken = 'pk.eyJ1IjoiZWxpYXNjbTE3IiwiYSI6ImNrOHJyNjNndzBobTQzZnBtOG85cW5iMzIifQ.C7a0Lkk8aenM5SDxQYw-Hg'
+        
+        mapboxgl.accessToken = String(process.env.REACT_APP_API_KEY)
+        
         interface IProps {
             setMap: React.Dispatch<React.SetStateAction<mapboxgl.Map | undefined>>;
         }
