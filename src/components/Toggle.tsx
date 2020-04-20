@@ -55,7 +55,7 @@ const Toggle = () => {
                         paddingBottom: 3,
                         color: '#e3e3e3'
                     }}/>}
-            onClick={() => {dispatch({ type: "TOGGLE_DARK_MODE"}); console.log('toggle')}}  
+            onClick={() => { dispatch({ type: "TOGGLE_DARK_MODE" }); console.log('toggle'); window.location.reload(true);}}  
         ></Button>
     )
 }
