@@ -1,13 +1,11 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
-import mapboxgl from "mapbox-gl";
+import mapboxgl, { LngLat } from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { Global, css } from '@emotion/core'
 import { useTheme } from 'emotion-theming'
 import { GlobalContext } from '../store/context'
-import { theme } from '../theme/theme';
 import Toggle from './Toggle'
-import { stringify } from "querystring";
 import { Stats } from "./Stats";
+import ReactDOM from "react-dom";
 
 const styles: React.CSSProperties  = {
     width: "100vw",
@@ -88,11 +86,18 @@ const Map = () => {
 
                 map.on('mousemove', 'state-fills', function (e: any) {
 
-                    // console.log(e.lngLat) mouse pointer coordinates
+                    var stateName = e.features[0].properties.STATE_NAME
 
-                    popup.setLngLat(e.lngLat)
-                        .setHTML(hoveredStateId) //what goes into the popup window
-                        .addTo(map);
+                    const placeholder = document.createElement('div');
+                    ReactDOM.render(<Stats StateName={stateName}/>, placeholder);
+
+                    if (stateName){
+                        // console.log(stateName) //name of state on hover
+                        popup
+                            .setLngLat(e.lngLat)
+                            .setDOMContent(placeholder) //what goes into the popup window
+                            .addTo(map);
+                    }
 
                     if (e.features.length > 0) {
                         if (hoveredStateId) {
@@ -107,6 +112,7 @@ const Map = () => {
                             { hover: true }
                         );
                     }
+
                 });
 
 
@@ -136,7 +142,6 @@ const Map = () => {
         <>
             <div id='map' ref={mapContainer} style={styles}/>
             <Toggle />
-            <Stats />
         </>
     ) 
 };
