@@ -1,15 +1,11 @@
-import React, { useState, useContext } from 'react'
-import { theme } from '../theme/theme'
-import { useTheme } from 'emotion-theming';
+import React, { useContext } from 'react'
 import { GlobalContext } from '../store/context';
 
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
-import useGlobalState from '../store/useGlobalState';
-import { IGlobalStateActions, GlobalStateActionTypes } from '../store/useGlobalState';
-import { Global } from '@emotion/core';
+import { GlobalStateActionTypes } from '../store/useGlobalState';
 
 const useStyles = makeStyles({
     sun: {

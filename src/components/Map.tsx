@@ -7,6 +7,7 @@ import { GlobalContext } from '../store/context'
 import { theme } from '../theme/theme';
 import Toggle from './Toggle'
 import { stringify } from "querystring";
+import { Stats } from "./Stats";
 
 const styles: React.CSSProperties  = {
     width: "100vw",
@@ -36,6 +37,11 @@ const Map = () => {
                 style: state.isDark ? theme.dark.mapStyle : theme.light.mapStyle,
                 center: [ -96.7129, 38.0902],
                 zoom: 4.3
+            });
+
+            var popup = new mapboxgl.Popup({ //popup info window
+                closeButton: false,
+                closeOnClick: false
             });
 
             var mapDiv: any = document.getElementById('map');
@@ -81,6 +87,13 @@ const Map = () => {
                 });
 
                 map.on('mousemove', 'state-fills', function (e: any) {
+
+                    // console.log(e.lngLat) mouse pointer coordinates
+
+                    popup.setLngLat(e.lngLat)
+                        .setHTML(hoveredStateId) //what goes into the popup window
+                        .addTo(map);
+
                     if (e.features.length > 0) {
                         if (hoveredStateId) {
                             map.setFeatureState(
@@ -98,6 +111,10 @@ const Map = () => {
 
 
                 map.on('mouseleave', 'state-fills', function () {
+
+                    map.getCanvas().style.cursor = '';
+                    popup.remove();
+
                     if (hoveredStateId) {
                         map.setFeatureState(
                             { source: 'states', id: hoveredStateId },
@@ -119,6 +136,7 @@ const Map = () => {
         <>
             <div id='map' ref={mapContainer} style={styles}/>
             <Toggle />
+            <Stats />
         </>
     ) 
 };
