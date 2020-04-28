@@ -6,6 +6,7 @@ import { GlobalContext } from '../store/context'
 import Toggle from './Toggle'
 import { Stats } from "./Stats";
 import ReactDOM from "react-dom";
+import states from '../local/states.json'
 
 const styles: React.CSSProperties  = {
     width: "100vw",
@@ -19,6 +20,15 @@ const Map = () => {
     const theme: any = useTheme()
     const [map, setMap] = useState<mapboxgl.Map>();
     const mapContainer = useRef<HTMLDivElement>(null);
+
+    function findAbb(stateName: String){
+        var i: number
+        for(i = 0; i < states.length; i++){
+            if(states[i].name == stateName){
+                return states[i].abbreviation
+            }
+        }
+    }
 
     useEffect(() => {
         
@@ -88,11 +98,14 @@ const Map = () => {
 
                     var stateName = e.features[0].properties.STATE_NAME
 
+                    var stateAbb = findAbb(stateName)
+
                     const placeholder = document.createElement('div');
-                    ReactDOM.render(<Stats StateName={stateName}/>, placeholder);
+                    ReactDOM.render(<Stats StateAbb={stateAbb}/>, placeholder);
 
                     if (stateName){
-                        // console.log(stateName) //name of state on hover
+
+
                         popup
                             .setLngLat(e.lngLat)
                             .setDOMContent(placeholder) //what goes into the popup window
