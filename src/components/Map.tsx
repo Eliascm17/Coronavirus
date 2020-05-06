@@ -4,9 +4,10 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { useTheme } from 'emotion-theming'
 import { GlobalContext } from '../store/context'
 import Toggle from './Toggle'
-import { Stats } from "./Stats";
+import { Stats } from './Stats';
 import ReactDOM from "react-dom";
 import states from '../local/states.json'
+import useStats from '../helper/useStats';
 
 const styles: React.CSSProperties  = {
     width: "100vw",
@@ -15,23 +16,20 @@ const styles: React.CSSProperties  = {
 };
 
 const Map = () => {
-    
+    // const [stateData, setStateData] = useState([])
+    var stateData: any = useStats('https://covidtracking.com/api/v1/states/current.json')
     const { state }: any = useContext(GlobalContext)
     const theme: any = useTheme()
     const [map, setMap] = useState<mapboxgl.Map>();
     const mapContainer = useRef<HTMLDivElement>(null);
 
-    function findAbb(stateName: String){
-        var i: number
-        for(i = 0; i < states.length; i++){
-            if(states[i].name == stateName){
-                return states[i].abbreviation
-            }
-        }
+    function findStateData(stateName: String): any{
+        var stateInfo: any = states.find(element => element.name === stateName)
+        return stateData.stats.find((element: { state: any; }) => element.state === stateInfo.abbreviation)
     }
 
     useEffect(() => {
-        
+
         mapboxgl.accessToken = String(process.env.REACT_APP_API_KEY)
         
         interface IProps {
@@ -95,17 +93,18 @@ const Map = () => {
                 });
 
                 map.on('mousemove', 'state-fills', function (e: any) {
-
+                    
                     var stateName = e.features[0].properties.STATE_NAME
-
-                    var stateAbb = findAbb(stateName)
+                    var stateData = findStateData(stateName)
+                    console.log(stateData)
 
                     const placeholder = document.createElement('div');
-                    ReactDOM.render(<Stats StateAbb={stateAbb}/>, placeholder);
+                    ReactDOM.render(<Stats 
+                                        stateData={stateData}   
+                                    />
+                    , placeholder);
 
                     if (stateName){
-
-
                         popup
                             .setLngLat(e.lngLat)
                             .setDOMContent(placeholder) //what goes into the popup window
@@ -149,7 +148,7 @@ const Map = () => {
 
         if (!map) initializeMap({ setMap });
 
-    }, [map]);
+    }, [map, stateData]);
 
     return(
         <>

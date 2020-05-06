@@ -2,17 +2,14 @@ import React from 'react'
 import useStats from '../helper/useStats'
 
 interface IStatsProps {
-    StateAbb: any;
+    stateData: any;
 }
 
-export const Stats = ({StateAbb}: IStatsProps) => {
-
-    //  - this component should pull from an endpoint to get data on all 50 states   
-    //  - be able to parse through data and on hover, show data in accordance to each state 
+export const Stats = ({stateData}: IStatsProps) => {
 
     return (
         <div>
-            <h1>{StateAbb}</h1>
+            <h2>{stateData ? stateData.state : ''}</h2>
         </div>
     )
 }

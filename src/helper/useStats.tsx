@@ -8,7 +8,7 @@ const useStats = (api: string) => {
     useEffect(() => {
         const getData = async () => {
             try {
-                console.log('getting virus data')
+                console.log('fetching data')
                 await axios.get(api)
                     .then(res => setStats(res.data))
                     .then(res => console.log(res))
