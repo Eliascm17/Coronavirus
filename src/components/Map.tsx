@@ -16,7 +16,6 @@ const styles: React.CSSProperties  = {
 };
 
 const Map = () => {
-    // const [stateData, setStateData] = useState([])
     var stateData: any = useStats('https://covidtracking.com/api/v1/states/current.json')
     const { state }: any = useContext(GlobalContext)
     const theme: any = useTheme()
@@ -96,10 +95,10 @@ const Map = () => {
                     
                     var stateName = e.features[0].properties.STATE_NAME
                     var stateData = findStateData(stateName)
-                    console.log(stateData)
 
                     const placeholder = document.createElement('div');
                     ReactDOM.render(<Stats 
+                                        stateName={stateName}
                                         stateData={stateData}   
                                     />
                     , placeholder);
