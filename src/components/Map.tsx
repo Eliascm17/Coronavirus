@@ -8,6 +8,7 @@ import { Stats } from './Stats';
 import ReactDOM from "react-dom";
 import states from '../local/states.json'
 import useStats from '../helper/useStats';
+import { Search } from "./Search";
 
 const styles: React.CSSProperties  = {
     width: "100vw",
@@ -97,10 +98,13 @@ const Map = () => {
                     var stateData = findStateData(stateName)
 
                     const placeholder = document.createElement('div');
-                    ReactDOM.render(<Stats 
-                                        stateName={stateName}
-                                        stateData={stateData}   
-                                    />
+                    ReactDOM.render(
+                                    <>
+                                        <Stats 
+                                            stateName={stateName}
+                                            stateData={stateData}   
+                                        />
+                                    </>
                     , placeholder);
 
                     if (stateName){
@@ -149,12 +153,13 @@ const Map = () => {
 
     }, [map, stateData]);
 
-    return(
-        <>
-            <div id='map' ref={mapContainer} style={styles}/>
-            <Toggle />
-        </>
-    ) 
+    return (
+      <>
+        <div id="map" ref={mapContainer} style={styles} />
+        {/* <Search /> */}
+        <Toggle />
+      </>
+    ); 
 };
 
 export default Map
