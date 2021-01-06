@@ -20,7 +20,7 @@
     "@types/react-native-vector-icons": "^6.4.5",
     "@types/styled-components": "^5.1.0",
     "@urbica/react-map-gl": "^1.13.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "emotion-theming": "^10.0.27",
     "local-storage-fallback": "^4.1.1",
     "mapbox-gl": "^1.9.1",
